@@ -1,20 +1,23 @@
-import React from "react";
+import React, { Component } from 'react';
 import './App.css';
 import axios from "axios";
  
-const App: React.FC = () => {
+const heliumApi = 'https://heliumint.azurewebsites.net/api/genres';
 
-  const api = 'https://heliumint.azurewebsites.net/api/genres';
+class App extends React.Component {
 
-  const state = {
-    genres: [],
+  state = {
+    items: [],
+    isLoaded: false,
   };
   
-  function componentDidMount() {
+  // invoked immediately after component is mounted 
+  // good place to load data from a remote endpoint
+  componentDidMount() {
     console.log("Start of Mount");
 
     axios
-      .get(api)
+      .get(heliumApi)
       .then(response => {
         console.log('arrived');
         console.log(response.data);
@@ -24,21 +27,23 @@ const App: React.FC = () => {
       });
   }
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Hi! 
-        </p>
-        <table>
-          <tbody>
-            <tr>
-            </tr>
-          </tbody>
-        </table>
-      </header>
-    </div>
-  );
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          <p>
+            Hi! 
+          </p>
+          <table>
+            <tbody>
+              <tr>
+              </tr>
+            </tbody>
+          </table>
+        </header>
+      </div>
+    );
+  }
 }
 
 export default App;
