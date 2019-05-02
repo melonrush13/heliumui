@@ -3,72 +3,68 @@ import './App.css';
 import axios from "axios";
 import * as cors from "cors";
 
-const heliumApi = 'https://heliumint.azurewebsites.net/api/genres';
+const heliumApi = 'https://heliumint.azurewebsites.net/api/';
 
 class App extends React.Component {
 
   state = {
-    items: [],
+    genreItems: [],
     isLoading: true,
+    genre: null,
+    data: null,
   };
   
   // invoked immediately after component is mounted 
   // good place to load data from a remote endpoint
   componentDidMount() {
     console.log("Start of Mount");
-    console.log(this.state.isLoading);
-
-
-    //function getGenres() {
+  
       axios
-      .get('https://cors-anywhere.herokuapp.com/' + heliumApi)
+      .get('https://cors-anywhere.herokuapp.com/' + heliumApi + 'genres')
       .then(response => {
-        console.log('arrived');
 
         this.setState({
           isLoading:false,
-          items: response.data[1].id,
+          genre: response.data[0].id,
+          data: null,
         })
-        console.log(response.data[1].id);
-        console.log(this.state.isLoading);
 
+        const data = response.data.genre;
+        this.setState({data});
 
+        // const newGenres = response.data.map((c:any) => {
+        //   console.log('hi ' + response.data[c].id);
+        //   return {
+        //     id: c.id,
+        //     name: c.name,
+        //   };
+        // });
 
-        const newContacts = response.data.map((c:any) => {
-          console.log('hi ' + response.data[c].id);
+        // const newState = Object.assign({}, this.state, {
+        //   genreItems: newGenres
+        // });
 
-          return {
-            id: c.id,
-            name: c.name
-          };
-        });
-
-
-
-
+        // this.setState(newState)
 
       })
-
-      
-
       .catch(error => {
         console.log(error);
-      });
-   // }
-   
+      });   
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <ul>genres: {this.state.items}</ul>
-          <p>State: {this.state.isLoading}</p>
+        <h1>Welcome to the Helium UI Application</h1>
+        <h4>View data</h4>
+          <p>genres: {this.state.genre}</p>
+          <p>genres: {this.state.data}</p>
           <table>
             <tbody>
-              {this.state.items.map((item) => {return <tr>
-                <td>item.id</td>
-                <td>item.genre</td>
+              {this.state.genreItems.map((genre) => {return <tr>
+                <td>genre.id</td>
+                <td>genre.genre</td>
               </tr>})}
             </tbody>
           </table>
