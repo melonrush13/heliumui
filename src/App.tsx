@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from "axios";
-import * as cors from "cors";
+// import * as cors from "cors";
 
 const heliumApi = 'https://heliumint.azurewebsites.net/api/';
+const cors = 'https://cors-anywhere.herokuapp.com/';
 
 class App extends React.Component {
 
@@ -20,7 +21,7 @@ class App extends React.Component {
     console.log("Start of Mount");
   
       axios
-      .get('https://cors-anywhere.herokuapp.com/' + heliumApi + 'genres')
+      .get(cors + heliumApi + 'genres')
       .then(response => {
 
         this.setState({
