@@ -1,34 +1,27 @@
 import React from "react";
-import logo from './logo.svg';
 import './App.css';
 import axios from "axios";
  
 const App: React.FC = () => {
 
+  const api = 'https://heliumint.azurewebsites.net/api/genres';
+
   const state = {
-    genres: []
+    genres: [],
   };
   
   function componentDidMount() {
-    axios
-      .get("https://heliumint.azurewebsites.net")
-      .then(response => {
-        // create an array of data
-        const genres = response.data.map((c:any) => {
-          return {
-            id: c.id,
-            genre: c.genre
-          }
-        });
-        const newState = Object.assign({}, this.state, {
-          genres: genres
-        });
+    console.log("Start of Mount");
 
-        // store the new state object in the component's state
-        this.setState(newState);
-        
+    axios
+      .get(api)
+      .then(response => {
+        console.log('arrived');
+        console.log(response.data);
       })
-    .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   return (
@@ -40,7 +33,6 @@ const App: React.FC = () => {
         <table>
           <tbody>
             <tr>
-              <td> {this.state.genres} </td>
             </tr>
           </tbody>
         </table>
