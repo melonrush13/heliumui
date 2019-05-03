@@ -16,6 +16,8 @@ class App extends React.Component {
 
   state = {
     names: null,
+    pups: [1, 2, 3],
+    wee: [{id: 'hi', name: null}],
   };
   
   // invoked immediately after component is mounted 
@@ -24,18 +26,18 @@ class App extends React.Component {
     const names = dogs.map(p => p.name);
     console.log(names);
 
-      // axios
-      // .get(cors + heliumApi + 'genres')
-      // .then(response => {
-      //   this.setState({
-      //     isLoading:false,
-      //     genre: response.data[0].id,
-      //     data: null,
-      //   })
-      // })
-      // .catch(error => {
-      //   console.log(error);
-      // });   
+      axios
+      .get(cors + heliumApi + 'genres')
+      .then(response => {
+        this.setState({
+          isLoading:false,
+          names: response.data.id,
+          data: null,
+        })
+      })
+      .catch(error => {
+        console.log(error);
+      });   
   }
 
   render() {
@@ -52,6 +54,20 @@ class App extends React.Component {
             </tbody>
           </table>
         </header>
+        <div>
+          <ul>
+            {this.state.pups.map(item => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <table>
+            {this.state.wee.map(item => (
+              <th>{item.id}</th>
+            ))}
+          </table>
+        </div>
       </div>
     );
   }
