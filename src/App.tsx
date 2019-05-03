@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from "axios";
+import { generateKeyPairSync } from 'crypto';
 // import * as cors from "cors";
 
 const heliumApi = 'https://heliumint.azurewebsites.net/api/';
@@ -24,11 +25,9 @@ class App extends React.Component {
           id: item.id,
           name: item.genre
         }))
-
         this.setState({
           genres: genredata
         })
-        
       })
       .catch(error => {
         console.log(error);
@@ -38,15 +37,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
         <h1>Welcome to the Helium UI Application</h1>
-        <h4>View data</h4>
-        </header>
-        <table>
-            {this.state.genres.map(item => (
-              <th>{item.id}</th>
+        <h2>Genres API</h2>
+        <ul>
+        {this.state.genres.map(item => (
+              <ul>{item.id}</ul>
             ))}
-        </table>
+        </ul>
       </div>
     );
   }
