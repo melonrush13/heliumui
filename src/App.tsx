@@ -6,34 +6,29 @@ import axios from "axios";
 const heliumApi = 'https://heliumint.azurewebsites.net/api/';
 const cors = 'https://cors-anywhere.herokuapp.com/';
 
-const dogs = [
-  {id: 1, breed: 'beagle', name: 'snoopy'},
-  {id: 2, breed: 'dalmation', name: 'QT'},
-  {id: 3, breed: 'palmaranian', name: 'puppy'},
-];
-
 class App extends React.Component {
 
   state = {
     names: null,
     pups: [1, 2, 3],
-    wee: [{id: 'hi', name: null}],
+    genres: [{id: null, name: null}],
   };
   
   // invoked immediately after component is mounted 
   // good place to load data from a remote endpoint
   componentDidMount() {  
-    const names = dogs.map(p => p.name);
-    console.log(names);
-
       axios
       .get(cors + heliumApi + 'genres')
       .then(response => {
+        const genredata = response.data.map((item: any) => ({
+          id: item.id,
+          name: item.genre
+        }))
+
         this.setState({
-          isLoading:false,
-          names: response.data.id,
-          data: null,
+          genres: genredata
         })
+        
       })
       .catch(error => {
         console.log(error);
@@ -46,28 +41,12 @@ class App extends React.Component {
         <header className="App-header">
         <h1>Welcome to the Helium UI Application</h1>
         <h4>View data</h4>
-          <ul>
-            {dogs.map(p => <p key={p.id}>{p.name}</p>)}
-          </ul>
-          <table>
-            <tbody>
-            </tbody>
-          </table>
         </header>
-        <div>
-          <ul>
-            {this.state.pups.map(item => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <table>
-            {this.state.wee.map(item => (
+        <table>
+            {this.state.genres.map(item => (
               <th>{item.id}</th>
             ))}
-          </table>
-        </div>
+        </table>
       </div>
     );
   }
