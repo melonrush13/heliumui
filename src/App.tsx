@@ -21,16 +21,23 @@ class App extends React.Component {
   onGenresClick = (event: any) => {
     console.log("genres display!");
     this.setState({genresDisplay: !this.state.genresDisplay})
+    this.setState({actorsDisplay: false}) 
+    this.setState({moviesDisplay: false})
   }
 
   onMoviesClick = (event: any) => {
     console.log("movies display!");
     this.setState({moviesDisplay: !this.state.moviesDisplay})
+    this.setState({actorsDisplay: false}) 
+    this.setState({genresDisplay: false}) 
+
   }
 
   onActorsClick = (event: any) => {
     console.log("actors display!");
     this.setState({actorsDisplay: !this.state.actorsDisplay})
+    this.setState({genresDisplay: false}) 
+    this.setState({moviesDisplay: false})
   }
   
   //testing github
