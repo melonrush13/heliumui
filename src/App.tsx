@@ -11,9 +11,9 @@ class App extends React.Component {
     genres: [{id: null, name: null}],
     movies: [{id: null, title: null}],
     actors: [{id: null, name: null}],
-    genresDisplay: true,
-    moviesDisplay: true,
-    actorsDisplay: true,
+    genresDisplay: false,
+    moviesDisplay: false,
+    actorsDisplay: false,
 
   };
 
