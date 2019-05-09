@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 import axios from "axios";
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import { Typography, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core';
+
 
 const heliumApi = 'https://heliumint.azurewebsites.net/api/';
 const cors = 'https://cors-anywhere.herokuapp.com/';
@@ -9,14 +12,19 @@ class App extends React.Component {
 
   state = {
     genres: [{id: null, name: null}],
-    movies: [{id: null, title: null}],
+    movies: [{id: null, title: null, year: null, genres: [], roles: [],}],
     actors: [{id: null, name: null}],
     genresDisplay: false,
     moviesDisplay: false,
     actorsDisplay: false,
-
+    expanded: null,
   };
 
+  handleChange = (panel: any) => (event: any, expanded: any) => {
+    this.setState({
+      expanded: expanded ? panel : false,
+    });
+  };
 
   onGenresClick = (event: any) => {
     console.log("genres display!");
@@ -40,7 +48,6 @@ class App extends React.Component {
     this.setState({moviesDisplay: false})
   }
   
-  //testing github
   componentDidMount() {  
       axios.get(cors + heliumApi + 'genres').then(response => {
         const genreData = response.data.map((item: any) => ({
@@ -73,13 +80,26 @@ class App extends React.Component {
       .catch(error => {
         console.log(error);
       });
-
   }
 
   render() {
+    const { expanded } = this.state;
     return (
       <div className="App">
-        <h1>Welcome to the Helium UI Application</h1>
+        <div>
+            <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
+              <ExpansionPanelSummary>
+                <Typography> Header </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <Typography>Details</Typography>
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+              {this.state.movies.map(item => (
+              <ExpansionPanelSummary>{item.title}</ExpansionPanelSummary> 
+              ))}
+        </div>
+        <h3>Welcome to the Helium UI Application</h3>
         <ul>
           <button onClick={this.onMoviesClick}>Movies</button>
           <button onClick={this.onGenresClick}>Genres</button>
