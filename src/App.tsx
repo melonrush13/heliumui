@@ -61,7 +61,9 @@ class App extends React.Component {
       axios.get(cors + heliumApi + 'movies').then(response => {
         const moviesData = response.data.map((item: any) => ({
           id: item.id,
-          title: item.title
+          title: item.title,
+          year: item.year,
+
         }))
         this.setState({
           movies: moviesData
@@ -88,16 +90,32 @@ class App extends React.Component {
       <div className="App">
         <div>
             <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
-              <ExpansionPanelSummary>
-                <Typography> Header </Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <Typography>Details</Typography>
-              </ExpansionPanelDetails>
+              <ExpansionPanelSummary> <Typography> Header </Typography></ExpansionPanelSummary>
+              <ExpansionPanelDetails> <Typography>Details</Typography> </ExpansionPanelDetails>
             </ExpansionPanel>
-              {this.state.movies.map(item => (
-              <ExpansionPanelSummary>{item.title}</ExpansionPanelSummary> 
-              ))}
+
+              {/* {this.state.movies.map(item => (
+                <ExpansionPanelSummary>{item.title}</ExpansionPanelSummary> 
+              ))}  */}
+
+              {/* {
+                this.state.genres.map((item) => { return (
+                  <li>
+                    <ul>{item.id}</ul>
+                    <ul>{item.name}</ul>
+                  </li>
+                )})
+              } */}
+
+              {
+                this.state.movies.map((item) => { return (
+                  <ExpansionPanel>
+                    <ExpansionPanelSummary>{item.title}</ExpansionPanelSummary>
+                    <ExpansionPanelDetails>{item.year}</ExpansionPanelDetails>
+                  </ExpansionPanel>
+                )})
+              }          
+
         </div>
         <h3>Welcome to the Helium UI Application</h3>
         <ul>
