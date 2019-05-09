@@ -12,7 +12,15 @@ class App extends React.Component {
 
   state = {
     genres: [{id: null, name: null}],
-    movies: [{id: null, title: null, year: null, genres: [], roles: [],}],
+    movies: [{
+      movieId: null,
+      type: null, 
+      title: null, 
+      year: null, 
+      runtime: null,
+      genres: [], 
+      roles: [],
+    }],
     actors: [{id: null, name: null}],
     genresDisplay: false,
     moviesDisplay: false,
@@ -60,10 +68,13 @@ class App extends React.Component {
       })
       axios.get(cors + heliumApi + 'movies').then(response => {
         const moviesData = response.data.map((item: any) => ({
-          id: item.id,
+          movieId: item.movieId,
+          type: item.type,
           title: item.title,
           year: item.year,
-
+          runtime: item.runtime,
+          genres: item.genres,
+          roles: item.roles
         }))
         this.setState({
           movies: moviesData
@@ -89,33 +100,21 @@ class App extends React.Component {
     return (
       <div className="App">
         <div>
-            <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
+            {/* <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
               <ExpansionPanelSummary> <Typography> Header </Typography></ExpansionPanelSummary>
               <ExpansionPanelDetails> <Typography>Details</Typography> </ExpansionPanelDetails>
-            </ExpansionPanel>
-
-              {/* {this.state.movies.map(item => (
-                <ExpansionPanelSummary>{item.title}</ExpansionPanelSummary> 
-              ))}  */}
-
-              {/* {
-                this.state.genres.map((item) => { return (
-                  <li>
-                    <ul>{item.id}</ul>
-                    <ul>{item.name}</ul>
-                  </li>
-                )})
-              } */}
-
+            </ExpansionPanel> */}
               {
                 this.state.movies.map((item) => { return (
                   <ExpansionPanel>
                     <ExpansionPanelSummary>{item.title}</ExpansionPanelSummary>
-                    <ExpansionPanelDetails>{item.year}</ExpansionPanelDetails>
+                    <ExpansionPanelDetails>{"Movie ID: " + item.movieId}</ExpansionPanelDetails>
+                    <ExpansionPanelDetails>{"Year: " + item.year}</ExpansionPanelDetails>
+                    <ExpansionPanelDetails>{"Runtime: " + item.runtime}</ExpansionPanelDetails>
+                    <ExpansionPanelDetails>{"Genres: " + item.genres}</ExpansionPanelDetails>  
                   </ExpansionPanel>
                 )})
               }          
-
         </div>
         <h3>Welcome to the Helium UI Application</h3>
         <ul>
